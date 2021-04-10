@@ -1,0 +1,5 @@
+class EnvironmentalVariablesEnum:
+    PIP_URL = "PIP_URL"
+    PIP_KEY = "PIP_KEY"
+    ENVIRONMENTAL_VARIABLES = "ENVIRONMENTAL_VARIABLES"
+

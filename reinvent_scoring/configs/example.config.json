@@ -1,0 +1,17 @@
+{
+  "USER_NAME": "<provide your username>",
+  "MAIN_TEST_PATH": "<provide writing path for your unit/integration tests>",
+  "DEVELOPMENT_ENVIRONMENT": true,
+  "COMPONENT_SPECIFIC":
+  {
+    "AZDOCK": {
+      "AZDOCK_DOCKER_SCRIPT_PATH": "/<your_path>/docker.py",
+      "AZDOCK_ENV_PATH": "/<your_path>/miniconda3/envs/AZdock/bin/python",
+      "AZDOCK_DEBUG": true
+    }
+  },
+  "ENVIRONMENTAL_VARIABLES": {
+    "PIP_URL": "<confidential info>",
+    "PIP_KEY": "<contact Atanas>"
+  }
+}

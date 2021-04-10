@@ -1,0 +1,1 @@
+from reinvent_scoring.scoring.score_components.pip.ratpk_pip import RatPKPiP
