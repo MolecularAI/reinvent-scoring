@@ -4,6 +4,9 @@ official release.
 
 For development use the enclosed environment.yml
 
+For unit testing make sure to include a `config.json` file located in 
+`\reinvent_scoring\configs\`. Use the provided example.config.json file as a template. 
+
 
 Building: python setup.py sdist bdist_wheel
 
