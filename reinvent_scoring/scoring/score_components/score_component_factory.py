@@ -6,7 +6,8 @@ from reinvent_scoring.scoring.score_components import TanimotoSimilarity, \
     RocsSimilarity, ParallelRocsSimilarity, PredictivePropertyComponent, SelectivityComponent, \
     SASComponent, MolWeight, PSA, RotatableBonds, HBD_Lipinski, HBA_Lipinski, \
     NumRings, AZlogD74, HLMClint, SlogP, \
-    RHClint, HHClint, SolubilityDD, HERG, CACO2Intrinsic, CACO2Efflux, AZdock, RatPKPiP, Top20
+    RHClint, HHClint, SolubilityDD, HERG, CACO2Intrinsic, CACO2Efflux, AZdock, RatPKPiP, Top20, GraphLength, \
+    NumberOfStereoCenters
 from reinvent_scoring.scoring.score_components import BaseScoreComponent
 from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
 from reinvent_scoring.scoring.score_components.pip.pip_log_prediction_component import PiPLogPredictionComponent
@@ -31,10 +32,12 @@ class ScoreComponentFactory:
             enum.MOLECULAR_WEIGHT: MolWeight,
             enum.TPSA: PSA,
             enum.NUM_ROTATABLE_BONDS: RotatableBonds,
+            enum.GRAPH_LENGTH: GraphLength,
             enum.NUM_HBD_LIPINSKI: HBD_Lipinski,
             enum.NUM_HBA_LIPINSKI: HBA_Lipinski,
             enum.NUM_RINGS: NumRings,
             enum.SLOGP: SlogP,
+            enum.NUMBER_OF_STEREO_CENTERS: NumberOfStereoCenters,
             enum.PARALLEL_ROCS_SIMILARITY: ParallelRocsSimilarity,
             enum.AZ_LOGD74: AZlogD74,
             enum.HLM_CLINT: HLMClint,
@@ -48,8 +51,8 @@ class ScoreComponentFactory:
             enum.SA_SCORE: SASComponent,
             enum.AZDOCK: AZdock,
             enum.AZ_LOGD74_PIP: PiPPredictionComponent,
-            enum.CACO2_INTR_PIP: PiPPredictionComponent,
-            enum.CACO2_EFFLUX_PIP: PiPLogPredictionComponent,
+            enum.CACO2_INTR_PIP: PiPLogPredictionComponent,
+            enum.CACO2_EFFLUX_PIP: PiPPredictionComponent,
             enum.HH_CLINT_PIP: PiPLogPredictionComponent,
             enum.HLM_CLINT_PIP: PiPLogPredictionComponent,
             enum.RH_CLINT_PIP: PiPLogPredictionComponent,

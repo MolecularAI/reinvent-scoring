@@ -1,8 +1,6 @@
 from typing import List
 
-from rdkit.Chem import Mol
-
-from reinvent_scoring.chemistry import Similarity
+from reinvent_chemistry.similarity import Similarity
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_components import BaseScoreComponent
 from reinvent_scoring.scoring.score_summary import ComponentSummary
@@ -19,7 +17,7 @@ class TanimotoSimilarity(BaseScoreComponent):
                                                                         use_counts=self._use_counts,
                                                                         use_features=self._use_features)
 
-    def calculate_score(self, molecules: List[Mol]) -> ComponentSummary:
+    def calculate_score(self, molecules: List) -> ComponentSummary:
         query_fps = self._chemistry.mols_to_fingerprints(molecules, self._radius, self._use_counts, self._use_features)
         score = self._similarity.calculate_tanimoto(query_fps, self._ref_fingerprints)
         score_summary = ComponentSummary(total_score=score, parameters=self.parameters)

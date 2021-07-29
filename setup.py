@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="reinvent_scoring",
-    version="0.0.27",
+    version="0.0.41",
     author="MolecularAI",
     author_email="patronov@gmail.com",
     description="Scoring functions for Reinvent",
@@ -19,5 +19,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
 )

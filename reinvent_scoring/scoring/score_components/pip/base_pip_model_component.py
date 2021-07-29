@@ -4,6 +4,7 @@ from abc import abstractmethod
 from typing import List
 
 import numpy as np
+import requests
 
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.enums import EnvironmentalVariablesEnum
@@ -14,6 +15,16 @@ class BasePiPModelComponent(BaseRESTComponent):
     def __init__(self, parameters: ComponentParameters):
         self._environment_keys = EnvironmentalVariablesEnum()
         super().__init__(parameters)
+
+    def _execute_request(self, request_url, data, header) -> dict:
+        request = requests.post(request_url, json=data, headers=header)
+        if request.status_code != 200:
+            raise ValueError(
+                f" Status: {request.status_code} Reason: ({request.reason})."
+                f"Response content: {request.content}\n"
+                f"Response content: {request.text}"
+            )
+        return request.json()
 
     def _parse_response(self, response_json: dict, data_size: int) -> np.array:
         compounds = response_json['jsonData']['data']
@@ -44,20 +55,25 @@ class BasePiPModelComponent(BaseRESTComponent):
                     "molFormat":
                         "smiles"
                 },
-                "parameters": {}
+                "parameters": {
+
+                }
             }
         }
         return data
 
-    def _create_url(self, component_name) -> str:
+    def _create_url(self, async_path: str) -> str:
         pip_url = self._get_enviornment_variable(self._environment_keys.PIP_URL)
-        request_url = pip_url.format(component_name)
+        request_url = pip_url.format(async_path)
         return request_url
 
     def _create_header(self) -> dict:
         pip_key = self._get_enviornment_variable(self._environment_keys.PIP_KEY)
 
-        header = {'Content-Type': 'application/json', 'x-api-key': pip_key}
+        header = {
+            'Content-Type': 'application/vnd.az.batch.v1+json', 'x-api-key': pip_key,
+            'Accept': 'application/vnd.az.resultset.v1+json'
+        }
         return header
 
     def _get_enviornment_variable(self, variable: str) -> str:

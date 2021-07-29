@@ -1,4 +1,3 @@
-from rdkit.Chem.Lipinski import NumHDonors
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_components.physchem.base_physchem_component import BasePhysChemComponent
 
@@ -8,4 +7,4 @@ class HBD_Lipinski(BasePhysChemComponent):
         super().__init__(parameters)
 
     def _calculate_phys_chem_property(self, mol):
-        return NumHDonors(mol)
+        return self._phys_chem_descriptors.hbd_libinski(mol)

@@ -9,14 +9,11 @@ import numpy as np
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_components import BaseScoreComponent
 from reinvent_scoring.scoring.score_summary import ComponentSummary
-from reinvent_scoring.scoring.score_transformations import TransformationFactory
-from reinvent_scoring.scoring.enums import TransformationTypeEnum
 
 
 class BaseROCSComponent(BaseScoreComponent):
     def __init__(self, parameters: ComponentParameters):
         super().__init__(parameters)
-        self._transformation_function = self._assign_transformation(self.parameters.specific_parameters)
 
     def calculate_score_for_step(self, molecules: List, step=-1) -> ComponentSummary:
         return self.calculate_score(molecules, step)
@@ -32,17 +29,6 @@ class BaseROCSComponent(BaseScoreComponent):
     @abstractmethod
     def _calculate_omega_score(self, smiles, step) -> np.array:
         raise NotImplementedError("_calculate_omega_score method is not implemented")
-
-    def _assign_transformation(self, specific_parameters: {}):
-        transformation_type = TransformationTypeEnum()
-        factory = TransformationFactory()
-        if self.parameters.specific_parameters.get(self.component_specific_parameters.TRANSFORMATION, False):
-            transform_function = factory.get_transformation_function(specific_parameters)
-        else:
-            self.parameters.specific_parameters[
-                self.component_specific_parameters.TRANSFORMATION_TYPE] = transformation_type.NO_TRANSFORMATION
-            transform_function = factory.no_transformation
-        return transform_function
 
     def _assign_id(self):
         '''

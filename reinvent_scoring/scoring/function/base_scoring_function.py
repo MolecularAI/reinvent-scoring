@@ -4,7 +4,7 @@ from typing import List
 import numpy as np
 from pathos.multiprocessing import ProcessPool
 
-from reinvent_scoring.chemistry.general import GeneralChemistry
+from reinvent_chemistry.conversions import Conversions
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_components.score_component_factory import ScoreComponentFactory
 from reinvent_scoring.scoring.score_summary import ComponentSummary, FinalSummary
@@ -57,7 +57,7 @@ class BaseScoringFunction(ABC):
     def __init__(self, parameters: List[ComponentParameters], parallel=False):
         self.component_enum = ScoringFunctionComponentNameEnum()
         self.component_specific_parameters = ComponentSpecificParametersEnum()
-        self._chemistry = GeneralChemistry()
+        self._chemistry = Conversions()
         factory = ScoreComponentFactory(parameters)
         self.scoring_components = factory.create_score_components()
         if parallel:

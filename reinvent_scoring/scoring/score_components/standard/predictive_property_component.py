@@ -14,9 +14,9 @@ class PredictivePropertyComponent(BaseScoreComponent):
     def __init__(self, parameters: ComponentParameters):
         super().__init__(parameters)
         self.activity_model = self._load_model(parameters)
-        self.transformation = self._assign_transformation(parameters.specific_parameters)
+        self._transformation_function = self._assign_transformation(parameters.specific_parameters)
 
-    def calculate_score(self, molecules: List) -> ComponentSummary:
+    def calculate_score(self, molecules: List, step=-1) -> ComponentSummary:
         score, raw_score = self._predict_and_transform(molecules)
         score_summary = ComponentSummary(total_score=score, parameters=self.parameters, raw_score=raw_score)
         return score_summary
@@ -41,7 +41,7 @@ class PredictivePropertyComponent(BaseScoreComponent):
 
     def _apply_transformation(self, predicted_activity, parameters: dict):
         if parameters.get(self.component_specific_parameters.TRANSFORMATION, False):
-            activity = self.transformation(predicted_activity, parameters)
+            activity = self._transformation_function(predicted_activity, parameters)
         else:
             activity = predicted_activity
         return activity

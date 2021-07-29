@@ -20,11 +20,6 @@ class AZdock(BaseStructuralComponent):
             command = ' '.join([command, "-debug"])
         return command
 
-    def _get_step_string(self, step):
-        if step == -1:
-            return "\"\""
-        return "".join(["\"e", str(step).zfill(4), "_\""])
-
     def _create_command(self, smiles: List[str], step):
         concat_smiles = '"' + ';'.join(smiles) + '"'
         command = ' '.join([self._environment_path,
@@ -56,7 +51,7 @@ class AZdock(BaseStructuralComponent):
             except ValueError:
                 score = 0
             scores.append(score)
-        transformed_scores = self.transformation_function(scores, self.parameters.specific_parameters)
+        transformed_scores = self._transformation_function(scores, self.parameters.specific_parameters)
 
         return np.array(transformed_scores), np.array(scores)
 

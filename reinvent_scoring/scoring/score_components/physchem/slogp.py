@@ -1,4 +1,3 @@
-from rdkit.Chem.Descriptors import MolLogP
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_components.physchem.base_physchem_component import BasePhysChemComponent
 
@@ -8,4 +7,4 @@ class SlogP(BasePhysChemComponent):
         super().__init__(parameters)
 
     def _calculate_phys_chem_property(self, mol):
-        return MolLogP(mol)
+        return self._phys_chem_descriptors.slog_p(mol)

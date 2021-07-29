@@ -2,7 +2,7 @@ from typing import List, Dict
 
 import numpy as np
 
-from reinvent_scoring.chemistry.descriptors import Descriptors
+from reinvent_chemistry.descriptors import Descriptors
 from reinvent_scoring.scoring.predictive_model.base_model_container import BaseModelContainer
 
 

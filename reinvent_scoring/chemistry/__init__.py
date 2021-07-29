@@ -1,3 +1,0 @@
-from reinvent_scoring.chemistry.similarity import Similarity
-from reinvent_scoring.chemistry.descriptors import Descriptors
-from reinvent_scoring.chemistry.general import GeneralChemistry
