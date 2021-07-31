@@ -20,8 +20,14 @@ from unittest_reinvent.scoring_tests.scoring_components.test_jaccard_distance_cu
     TestJaccardCustomFingerprintParameters
 from unittest_reinvent.scoring_tests.scoring_components.test_matching_substructure import \
     TestMatchingSubstructures
+from unittest_reinvent.scoring_tests.scoring_components.test_invalid_matching_substructure import \
+    TestInvalidMatchingSubstructure
+from unittest_reinvent.scoring_tests.scoring_components.test_matching_substructures_not_provided import \
+    TestMatchingSubstructuresNotProvided
 from unittest_reinvent.scoring_tests.scoring_components.test_predictive_property_component import \
     TestPredictivePropertyComponent
+from unittest_reinvent.scoring_tests.scoring_components.test_tanimoto_custom_fingerprint_parameters import \
+    TestTanimotoCustomFingerprintParameters
 from unittest_reinvent.scoring_tests.scoring_components.test_qed_score import TestQedScore
 from unittest_reinvent.scoring_tests.scoring_components.test_tanimoto_similarity import TestTanimotoSimilarity
 from unittest_reinvent.scoring_tests.scoring_components.pip import *

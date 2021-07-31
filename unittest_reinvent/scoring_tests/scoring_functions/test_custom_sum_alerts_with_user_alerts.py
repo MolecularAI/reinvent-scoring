@@ -1,5 +1,5 @@
 from unittest_reinvent.fixtures.test_data import CELECOXIB, ASPIRIN, BENZENE, ANILINE
-from unittest_reinvent.scoring_tests.scoring_functions.base_custom_sum import BaseTestCustomSum
+from unittest_reinvent.scoring_tests.scoring_functions.base_test_custom_sum import BaseTestCustomSum
 
 
 class TestCustomAlertsWithUserAlerts(BaseTestCustomSum):

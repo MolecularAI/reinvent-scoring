@@ -2,7 +2,7 @@ from rdkit import Chem
 
 from reinvent_scoring.scoring.score_components.score_component_factory import ScoreComponentFactory
 from unittest_reinvent.fixtures.test_data import BENZENE
-from unittest_reinvent.scoring_tests.scoring_functions.base_custom_sum import BaseTestCustomSum
+from unittest_reinvent.scoring_tests.scoring_functions.base_test_custom_sum import BaseTestCustomSum
 
 
 class Test_custom_sum_qed_score(BaseTestCustomSum):

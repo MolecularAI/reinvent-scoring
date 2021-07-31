@@ -1,5 +1,5 @@
 from unittest_reinvent.fixtures.test_data import BUTANE, CELECOXIB, ASPIRIN
-from unittest_reinvent.scoring_tests.scoring_functions.base_custom_sum import BaseTestCustomSum
+from unittest_reinvent.scoring_tests.scoring_functions.base_test_custom_sum import BaseTestCustomSum
 
 
 class TestTanimotoSimilarity(BaseTestCustomSum):

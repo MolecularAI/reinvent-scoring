@@ -1,5 +1,6 @@
 
 from unittest_reinvent.scoring_tests.scoring_functions import *
+from unittest_reinvent.scoring_tests.scoring_transformations import *
 from unittest_reinvent.scoring_tests.clab_models import *
 
 from unittest_reinvent.scoring_tests.scoring_components import *

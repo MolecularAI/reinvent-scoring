@@ -7,10 +7,10 @@ from unittest_reinvent.scoring_tests.fixtures import create_activity_component_r
 from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
 from unittest_reinvent.fixtures.test_data import CELECOXIB
 
-class Test_product(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(self):
+class TestProduct(unittest.TestCase):
+
+    def setUp(self):
         sf_enum = ScoringFunctionComponentNameEnum()
         predictive_property = create_predictive_property_component_regression()
         activity = create_activity_component_regression()

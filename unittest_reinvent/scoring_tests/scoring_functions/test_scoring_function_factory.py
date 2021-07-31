@@ -7,10 +7,9 @@ from reinvent_scoring.scoring.enums import ScoringFunctionNameEnum
 from unittest_reinvent.fixtures.test_data import BUTANE, CELECOXIB, HEXANE
 
 
-class Test_scoring_function_factory(unittest.TestCase):
+class TestScoringFunctionFactory(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(self):
+    def setUp(self):
         enum = ScoringFunctionComponentNameEnum()
         ts_parameters = dict(component_type=enum.TANIMOTO_SIMILARITY,
                              name="tanimoto_similarity",

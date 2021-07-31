@@ -1,5 +1,5 @@
 from unittest_reinvent.fixtures.test_data import CELECOXIB, ASPIRIN, BENZENE
-from unittest_reinvent.scoring_tests.scoring_functions.base_primary_multiplicative import BaseTestPrimaryMultiplicative
+from unittest_reinvent.scoring_tests.scoring_functions.base_test_primary_multiplicative import BaseTestPrimaryMultiplicative
 
 
 class TestPrimaryMultiplicativeFunction(BaseTestPrimaryMultiplicative):
