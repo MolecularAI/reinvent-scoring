@@ -22,7 +22,7 @@
   },
   "ENVIRONMENTAL_VARIABLES": {
     "PIP_URL": "<confidential info>",
-    "PIP_KEY": "<contact Atanas>",
+    "PIP_KEY": "<confidential info>",
     "PIP_GET_RESULTS": "<relevant only for batching implemented in BasePiPModelBatchingComponent>"
   }
 }
