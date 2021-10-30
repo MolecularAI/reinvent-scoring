@@ -11,7 +11,7 @@ setuptools.setup(
     description="Scoring functions for Reinvent",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://bitbucket.astrazeneca.net/scm/com/reinvent_scoring.git",
+    url="",
     package_data={"reinvent_scoring": ["scoring/score_components/synthetic_accessibility/fpscores.pkl.gz"]},
     packages=setuptools.find_packages(exclude='unittest_reinvent'),
     classifiers=[
