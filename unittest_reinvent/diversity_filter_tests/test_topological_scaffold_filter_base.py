@@ -4,9 +4,10 @@ import unittest
 
 import numpy as np
 
-from reinvent_scoring.scoring.diversity_filters.reinvent_core.diversity_filter import DiversityFilter
-from reinvent_scoring.scoring.diversity_filters.reinvent_core.diversity_filter_parameters import \
-    DiversityFilterParameters
+from reinvent_scoring.scoring.diversity_filters.curriculum_learning import DiversityFilterParameters
+from reinvent_scoring.scoring.diversity_filters.curriculum_learning.diversity_filter import DiversityFilter
+from reinvent_scoring.scoring.diversity_filters.curriculum_learning.update_diversity_filter_dto import \
+    UpdateDiversityFilterDTO
 from unittest_reinvent.fixtures.paths import MAIN_TEST_PATH
 from unittest_reinvent.fixtures.test_data import ASPIRIN, PROPANE
 from reinvent_scoring.scoring.enums.diversity_filter_enum import DiversityFilterEnum
@@ -29,18 +30,17 @@ class BaseTopologicalScaffoldFilter(unittest.TestCase):
         component_parameters = ComponentParameters(component_type=self.sf_enum.TANIMOTO_SIMILARITY,
                                                    name="tanimoto_similarity",
                                                    weight=1.,
-                                                   smiles=smiles,
-                                                   model_path="",
                                                    specific_parameters={})
         component_score_summary = ComponentSummary(scores, component_parameters)
 
         final_summary = FinalSummary(scores, smiles, valid_idx, [component_score_summary])
+        update_dto = UpdateDiversityFilterDTO(final_summary, [])
 
         sf_parameters = DiversityFilterParameters(name=self.scaffold_enum.IDENTICAL_TOPOLOGICAL_SCAFFOLD, minscore=0.5,
                                                   minsimilarity=0.4, bucket_size=1)
 
         self.scaffold_filter = DiversityFilter(sf_parameters)
-        self.scaffold_filter.update_score(final_summary)
+        self.scaffold_filter.update_score(update_dto)
 
     def tearDown(self):
         if os.path.isdir(self.workfolder):

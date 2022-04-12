@@ -1,6 +1,8 @@
 import unittest
 from typing import List, Optional
 
+from reinvent_scoring.scoring.enums.component_specific_parameters_enum import ComponentSpecificParametersEnum
+
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from unittest_reinvent.scoring_tests.fixtures.predictive_model_fixtures import create_custom_alerts_configuration, \
     create_activity_component_regression
@@ -18,19 +20,16 @@ class BaseTestSelectivityMultiplicative(unittest.TestCase):
         self.matching_substructure_smiles = matching_substructure_smiles
 
     def setUp(self):
+        csp_enum = ComponentSpecificParametersEnum()
         self.enum = ScoringFunctionComponentNameEnum()
         self.qed_score = ComponentParameters(component_type=self.enum.QED_SCORE,
                                              name="qed_score_name",
                                              weight=1.,
-                                             smiles=self.qed_smiles,
-                                             model_path="",
-                                             specific_parameters={})
+                                             specific_parameters={csp_enum.SMILES:self.qed_smiles})
 
         self.custom_alerts = create_custom_alerts_configuration()
 
         self.matching_substructure = ComponentParameters(component_type=self.enum.MATCHING_SUBSTRUCTURE,
                                                          name="matching_substructure_name",
                                                          weight=1.,
-                                                         smiles=self.matching_substructure_smiles,
-                                                         model_path="",
-                                                         specific_parameters={})
+                                                         specific_parameters={csp_enum.SMILES:self.matching_substructure_smiles})

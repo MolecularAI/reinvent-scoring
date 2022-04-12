@@ -22,6 +22,6 @@ class NoFilter(BaseDiversityFilter):
         for i in score_summary.valid_idxs:
             if scores[i] >= self.parameters.minscore:
                 smile = score_summary.scored_smiles[i]
-                decorations = f'{sampled_sequences[i].scaffold}|{sampled_sequences[i].decoration}'
+                decorations = f'{sampled_sequences[i].input}|{sampled_sequences[i].output}'
                 self._add_to_memory(i, scores[i], smile, decorations, score_summary.scaffold_log, step)
         return scores

@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from unittest_reinvent.fixtures.paths import ROCS_SHAPE_QUERY_CFF, ROCS_CUSTOM_CFF
 from reinvent_scoring.scoring import CustomSum
@@ -10,6 +11,7 @@ from unittest_reinvent.fixtures.test_data import AMOXAPINE, METHOXYHYDRAZINE, IN
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestRocsSimilarityWithCustomCff(unittest.TestCase):
 
     def setUp(self):
@@ -22,7 +24,7 @@ class TestRocsSimilarityWithCustomCff(unittest.TestCase):
                                "rocs_input": ROCS_SHAPE_QUERY_CFF,
                                "input_type": input_type_enum.SHAPE_QUERY,
                                "custom_cff": ROCS_CUSTOM_CFF,
-                               csp_enum.TRANSFORMATION: False,
+                               csp_enum.TRANSFORMATION: {},
                                "max_num_cpus": 8
                                }
         rocs_sim = component_parameters(component_type=sf_enum.ROCS_SIMILARITY, specific_parameters=specific_parameters)

@@ -12,4 +12,4 @@ class TestPrimaryMultWithPredictionClassificationAndRegressionAlert(BaseTestPrim
 
     def test_primary_mult_with_reg_class_1(self):
         score = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.481, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.337, 3)

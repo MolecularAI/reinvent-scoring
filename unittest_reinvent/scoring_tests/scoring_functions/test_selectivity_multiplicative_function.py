@@ -16,10 +16,10 @@ class TestSelectivityMultiplicativeFunction(BaseTestSelectivityMultiplicative):
 
     def test_special_selectivity_multiplicative_1(self):
         score = self.sf_state.get_final_score(smiles=[ANILINE])
-        self.assertAlmostEqual(score.total_score[0], 0.357, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.269, 3)
 
     def test_special_selectivity_multiplicative_2(self):
         score_1 = self.sf_state.get_final_score(smiles=[CELECOXIB])
         score_2 = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score_1.total_score[0], 0.481, 3)
-        self.assertAlmostEqual(score_2.total_score[0], 0.481, 3)
+        self.assertAlmostEqual(score_1.total_score[0], 0.337, 3)
+        self.assertAlmostEqual(score_2.total_score[0], 0.337, 3)

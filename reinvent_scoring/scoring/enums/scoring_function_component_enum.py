@@ -1,5 +1,7 @@
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True)
 class ScoringFunctionComponentNameEnum:
     PARALLEL_ROCS_SIMILARITY = "parallel_rocs_similarity"
     SELECTIVITY = "selectivity"
@@ -15,6 +17,8 @@ class ScoringFunctionComponentNameEnum:
     NUM_HBD_LIPINSKI = "num_hbd_lipinski"
     NUM_HBA_LIPINSKI = "num_hba_lipinski"
     NUM_RINGS = "num_rings"
+    NUM_AROMATIC_RINGS = "num_aromatic_rings"
+    NUM_ALIPHATIC_RINGS = "num_aliphatic_rings"
     TPSA = "tpsa"
     SLOGP = "slogp"
     GRAPH_LENGTH = "graph_length"
@@ -22,19 +26,26 @@ class ScoringFunctionComponentNameEnum:
     TOTAL_SCORE = "total_score" # there is no actual component corresponding to this type
     REACTION_FILTERS = "reaction_filters"
 
+    # Link invent specific
+    LINKER_EFFECTIVE_LENGTH = "linker_effective_length"
+    LINKER_GRAPH_LENGTH = "linker_graph_length"
+    LINKER_LENGTH_RATIO = "linker_length_ratio"
+    LINKER_NUM_RINGS = "linker_num_rings"
+    LINKER_NUM_ALIPHATIC_RINGS = "linker_num_aliphatic_rings"
+    LINKER_NUM_AROMATIC_RINGS = "linker_num_aromatic_rings"
+    LINKER_NUM_SP_ATOMS = "linker_num_sp_atoms"
+    LINKER_NUM_SP2_ATOMS = "linker_num_sp2_atoms"
+    LINKER_NUM_SP3_ATOMS = "linker_num_sp3_atoms"
+    LINKER_NUM_HBA = "linker_num_hba"
+    LINKER_NUM_HBD = "linker_num_hbd"
+    LINKER_MOL_WEIGHT = "linker_mol_weight"
+    LINKER_RATIO_ROTATABLE_BONDS = "linker_ratio_rotatable_bonds"
+
     #NOTE: components below are AZ specific
-    AZ_LOGD74 = "az_logd74"
-    HLM_CLINT = "hlm_clint"
-    RH_CLINT = "rh_clint"
-    HH_CLINT = "hh_clint"
-    SOLUBILITY_DD = "solubilityDD"
-    CACO2_INTR = "caco2_intr"
-    CACO2_EFFLUX = "caco2_efflux"
-    HERG = "clab_herg"
     SA_SCORE = "sa_score"
     AZDOCK = "azdock"
     DOCKSTREAM = "dockstream"
-    AZGARD = "azgard"
+    ICOLOS = "icolos"
     AZ_LOGD74_PIP = "azlogd74"
     CACO2_INTR_PIP = "caco2-intrinsic-papp"
     CACO2_EFFLUX_PIP = "caco2-efflux"
@@ -47,11 +58,6 @@ class ScoringFunctionComponentNameEnum:
     RAT_PK_PIP = "rat-pk"
     CLAB_TOP_20 = "clab_top_20"
     RA_SCORE = "rascore"
-
-    def __getattr__(self, name):
-        if name in self:
-            return name
-        raise AttributeError
-
-    def __setattr__(self, key, value):
-        raise ValueError("Do not assign value to a ScoringFunctionComponentNameEnum field.")
+    AIZYNTH = "aizynth"
+    QPTUNA_PIP_MODEL = "optuna-multi"
+    THP1_CYTOTOXICITY = "thp1-class"

@@ -51,7 +51,10 @@ class BaseRESTComponent(BaseScoreComponent):
         transformed into 0. """
         valid_mask = ~np.isnan(results_raw)
         results_raw_valid = results_raw[valid_mask]
-        results_transformed = self._transformation_function(results_raw_valid, self.parameters.specific_parameters)
+        transform_params = self.parameters.specific_parameters.get(
+            self.component_specific_parameters.TRANSFORMATION, {}
+        )
+        results_transformed = self._transformation_function(results_raw_valid, transform_params)
         results = np.zeros(len(results_raw), dtype=np.float32)
         results[valid_mask] = results_transformed
 

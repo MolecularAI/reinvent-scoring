@@ -9,10 +9,7 @@ class TestTpsaScoreNoTransformation(BaseSetup):
 
     def setUp(self):
         super().setup_attrs()
-        specific_parameters = {
-            self.csp_enum.TRANSFORMATION: False
-        }
-        super().init(self.sf_enum.TPSA, specific_parameters)
+        super().init(self.sf_enum.TPSA, {})
         super().setUp()
 
     def test_tpsa_1(self):

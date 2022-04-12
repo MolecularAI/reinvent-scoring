@@ -9,10 +9,7 @@ class TestMwScoreNoTransformation(BaseSetup):
 
     def setUp(self):
         super().setup_attrs()
-        specific_parameters = {
-            self.csp_enum.TRANSFORMATION: False
-        }
-        super().init(self.sf_enum.MOLECULAR_WEIGHT, specific_parameters)
+        super().init(self.sf_enum.MOLECULAR_WEIGHT, {})
         super().setUp()
 
     def test_mw_1(self):

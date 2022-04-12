@@ -9,10 +9,7 @@ class TestHbdScoreNoTransformation(BaseSetup):
 
     def setUp(self):
         super().setup_attrs()
-        specific_parameters = {
-            self.csp_enum.TRANSFORMATION: False
-        }
-        super().init(self.sf_enum.NUM_HBD_LIPINSKI, specific_parameters)
+        super().init(self.sf_enum.NUM_HBD_LIPINSKI, {})
         super().setUp()
 
     def test_hbd_1(self):

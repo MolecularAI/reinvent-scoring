@@ -21,17 +21,17 @@ class TestDesirabilityMultiplicativeFunction(BaseTestSelectivityFunctionDoubleSi
 
     def test_desirability_multiplicative_1(self):
         score = self.sf_state.get_final_score(smiles=[BUTANE])
-        self.assertAlmostEqual(score.total_score[0], 0.142, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.141, 3)
 
     def test_desirability_multiplicative_2(self):
         score = self.sf_state.get_final_score(smiles=[ANILINE])
-        self.assertAlmostEqual(score.total_score[0], 0.294, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.292, 3)
 
     def test_desirability_multiplicative_3(self):
         score = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.342, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.339, 3)
 
     def test_desirability_multiplicative_4(self):
         score = self.sf_state.get_final_score(smiles=[HEXANE, "12"])
-        self.assertAlmostEqual(score.total_score[0], 0.145, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.144, 3)
         self.assertEqual(score.total_score[1], 0)

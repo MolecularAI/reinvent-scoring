@@ -1,6 +1,6 @@
 import unittest
 
-from reinvent_scoring.scoring.diversity_filters.reinvent_core.diversity_filter_memory import DiversityFilterMemory
+from reinvent_scoring.scoring.diversity_filters.curriculum_learning import DiversityFilterMemory
 from unittest_reinvent.fixtures.test_data import TOLUENE, ANILINE, BENZENE
 
 

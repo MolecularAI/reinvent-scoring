@@ -9,3 +9,4 @@ from reinvent_scoring.scoring.enums.rocs_specific_parameters_enum import ROCSSpe
 from reinvent_scoring.scoring.enums.scoring_function_component_enum import ScoringFunctionComponentNameEnum
 from reinvent_scoring.scoring.enums.scoring_function_enum import ScoringFunctionNameEnum
 from reinvent_scoring.scoring.enums.transformation_type_enum import TransformationTypeEnum
+from reinvent_scoring.scoring.enums.transformation_parameters_enum import TransformationParametersEnum

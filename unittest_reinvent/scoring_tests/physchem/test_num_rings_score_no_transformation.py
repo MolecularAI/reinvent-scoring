@@ -9,10 +9,7 @@ class TestNumRingsScoreNoTransformation(BaseSetup):
 
     def setUp(self):
         super().setup_attrs()
-        specific_parameters = {
-            self.csp_enum.TRANSFORMATION: False
-        }
-        super().init(self.sf_enum.NUM_RINGS, specific_parameters)
+        super().init(self.sf_enum.NUM_RINGS, {})
         super().setUp()
 
     def test_num_rings_1(self):

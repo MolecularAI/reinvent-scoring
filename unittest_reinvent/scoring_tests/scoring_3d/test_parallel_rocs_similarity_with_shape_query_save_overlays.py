@@ -1,4 +1,5 @@
 import unittest
+import pytest
 import os
 import shutil
 
@@ -15,6 +16,7 @@ from unittest_reinvent.fixtures.test_data import CELECOXIB
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestParallelRocsSimilarityWithShapeQuerySaveOverlays(unittest.TestCase):
 
     def setUp(self):

@@ -16,7 +16,7 @@ class TestMixedSelectivityComponent(BaseTestSelectivityComponent):
 
     def test_selectivity_component(self):
         smiles = [CELECOXIB, ASPIRIN]
-        expected_values = [0.634, 0.614]
+        expected_values = [0.01, 0.01]
         scores = score(self.component, smiles)
         npt.assert_almost_equal(scores, expected_values, decimal=3)
 

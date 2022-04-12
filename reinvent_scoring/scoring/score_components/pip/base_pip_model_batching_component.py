@@ -8,6 +8,7 @@ import numpy as np
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.enums import EnvironmentalVariablesEnum
 from reinvent_scoring.scoring.score_components.pip.base_rest_component import BaseRESTComponent
+from reinvent_scoring.configs.config import reinvent_scoring_config
 import requests
 import time
 
@@ -98,13 +99,10 @@ class BasePiPModelBatchingComponent(BaseRESTComponent):
 
     def _retrieve_pip_key_from_config(self, variable: str) -> str:
         try:
-            project_root = os.path.dirname(__file__)
-            with open(os.path.join(project_root, '../../../configs/config.json'), 'r') as f:
-                config = json.load(f)
-            environmental_variables = config[self._environment_keys.ENVIRONMENTAL_VARIABLES]
+            environmental_variables = reinvent_scoring_config[self._environment_keys.ENVIRONMENTAL_VARIABLES]
             return environmental_variables[variable]
         except KeyError as ex:
-            raise KeyError(f"Key {variable} not found in reinvent_scoring/configs/config.json")
+            raise KeyError(f"Key {variable} not found in reinvent scoring config")
 
     def _get_results(self, response):
         """

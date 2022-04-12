@@ -10,6 +10,4 @@ class BaseTestMatchingSubstructure(unittest.TestCase):
         self.parameters = ComponentParameters(component_type=sf_enum.MATCHING_SUBSTRUCTURE,
                                               name="matching_substructure",
                                               weight=1.,
-                                              smiles=self.smiles,
-                                              model_path="",
-                                              specific_parameters={})
+                                              specific_parameters={"smiles":self.smiles})

@@ -1,13 +1,11 @@
 import json
 import os
+from reinvent_scoring.configs.config import reinvent_scoring_config
 
 
 def _is_development_environment() -> bool:
     try:
-        project_root = os.path.dirname(__file__)
-        with open(os.path.join(project_root, '../configs/config.json'), 'r') as f:
-            config = json.load(f)
-        is_dev = config.get("DEVELOPMENT_ENVIRONMENT", False)
+        is_dev = reinvent_scoring_config.get("DEVELOPMENT_ENVIRONMENT", False)
         return is_dev
     except:
         return False

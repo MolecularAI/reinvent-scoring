@@ -3,7 +3,7 @@ from typing import List
 
 from reinvent_chemistry.conversions import Conversions
 
-from reinvent_scoring.scoring.enums import TransformationTypeEnum
+from reinvent_scoring.scoring.enums import TransformationTypeEnum, TransformationParametersEnum
 from reinvent_scoring.scoring.score_transformations import TransformationFactory
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_summary import ComponentSummary
@@ -30,10 +30,14 @@ class BaseScoreComponent(ABC):
         factory = TransformationFactory()
         if not self.parameters.specific_parameters: #FIXME: this is a hack
             self.parameters.specific_parameters = {}
-        if self.parameters.specific_parameters.get(self.component_specific_parameters.TRANSFORMATION, False):
-            transform_function = factory.get_transformation_function(specific_parameters)
+        transform_params = self.parameters.specific_parameters.get(
+            self.component_specific_parameters.TRANSFORMATION, {})
+        if transform_params:
+            transform_function = factory.get_transformation_function(transform_params)
         else:
             self.parameters.specific_parameters[
-                self.component_specific_parameters.TRANSFORMATION_TYPE] = transformation_type.NO_TRANSFORMATION
+                self.component_specific_parameters.TRANSFORMATION] = {
+                    TransformationParametersEnum.TRANSFORMATION_TYPE: transformation_type.NO_TRANSFORMATION
+                }
             transform_function = factory.no_transformation
         return transform_function

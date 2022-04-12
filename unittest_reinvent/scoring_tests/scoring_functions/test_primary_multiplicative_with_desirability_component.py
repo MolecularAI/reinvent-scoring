@@ -7,6 +7,7 @@ from unittest_reinvent.scoring_tests.fixtures.predictive_model_fixtures import c
     create_offtarget_activity_component_regression, create_custom_alerts_configuration
 from reinvent_scoring.scoring.enums import ComponentSpecificParametersEnum
 from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
+from reinvent_scoring.scoring.enums import TransformationParametersEnum
 from reinvent_scoring.scoring.enums import TransformationTypeEnum
 from unittest_reinvent.fixtures.test_data import CELECOXIB, METHOXYHYDRAZINE, BENZENE
 
@@ -18,10 +19,14 @@ class TestPrimaryMultiplicativeWithDesirabilityComponent(unittest.TestCase):
         transf_type = TransformationTypeEnum()
         enum = ScoringFunctionComponentNameEnum()
         activity = create_activity_component_regression()
-        activity.specific_parameters[csp_enum.TRANSFORMATION_TYPE] = transf_type.DOUBLE_SIGMOID
-        activity.specific_parameters[csp_enum.COEF_DIV] = 100.
-        activity.specific_parameters[csp_enum.COEF_SI] = 150.
-        activity.specific_parameters[csp_enum.COEF_SE] = 150.
+        activity_transform_params = {
+            TransformationParametersEnum.TRANSFORMATION_TYPE: transf_type.DOUBLE_SIGMOID,
+            TransformationParametersEnum.COEF_DIV: 100.,
+            TransformationParametersEnum.COEF_SI: 150.,
+            TransformationParametersEnum.COEF_SE: 150.,
+        }
+        activity.specific_parameters[csp_enum.TRANSFORMATION].update(
+            activity_transform_params)
         off_activity = create_offtarget_activity_component_regression()
 
         delta_params = {
@@ -35,11 +40,9 @@ class TestPrimaryMultiplicativeWithDesirabilityComponent(unittest.TestCase):
         selectivity = ComponentParameters(component_type=enum.SELECTIVITY,
                                           name="desirability",
                                           weight=1.,
-                                          smiles=[],
-                                          model_path="",
                                           specific_parameters={
-                                              "activity_model_path": activity.model_path,
-                                              "offtarget_model_path": off_activity.model_path,
+                                              "activity_model_path": activity.specific_parameters[csp_enum.MODEL_PATH],
+                                              "offtarget_model_path": off_activity.specific_parameters[csp_enum.MODEL_PATH],
                                               "activity_specific_parameters": activity.specific_parameters.copy(),
                                               "offtarget_specific_parameters": off_activity.specific_parameters,
                                               "delta_transformation_parameters": delta_params
@@ -47,15 +50,11 @@ class TestPrimaryMultiplicativeWithDesirabilityComponent(unittest.TestCase):
         qed_score = ComponentParameters(component_type=enum.QED_SCORE,
                                         name="qed_score",
                                         weight=1.,
-                                        smiles=[],
-                                        model_path="",
                                         specific_parameters={})
         matching_substructure = ComponentParameters(component_type=enum.MATCHING_SUBSTRUCTURE,
                                                     name="matching_substructure",
                                                     weight=1.,
-                                                    smiles=[BENZENE],
-                                                    model_path="",
-                                                    specific_parameters={})
+                                                    specific_parameters={"smiles":[BENZENE]})
         custom_alerts = create_custom_alerts_configuration()
 
         self.sf_state = CustomProduct(
@@ -67,4 +66,4 @@ class TestPrimaryMultiplicativeWithDesirabilityComponent(unittest.TestCase):
 
     def test_desirability_component_2(self):
         score: FinalSummary = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.342, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.339, 3)

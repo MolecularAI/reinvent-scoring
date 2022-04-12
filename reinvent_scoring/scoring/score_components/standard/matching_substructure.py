@@ -11,8 +11,8 @@ from reinvent_scoring.scoring.score_summary import ComponentSummary
 class MatchingSubstructure(BaseScoreComponent):
     def __init__(self, parameters: ComponentParameters):
         super().__init__(parameters)
-        self.target_smarts = self.parameters.smiles  # these are actually smarts
-        self._validate_inputs(self.parameters.smiles)
+        self.target_smarts = self.parameters.specific_parameters.get(self.component_specific_parameters.SMILES, [])
+        self._validate_inputs(self.target_smarts)
 
     def calculate_score(self, molecules: List) -> ComponentSummary:
         score = self._substructure_match(molecules, self.target_smarts)

@@ -8,7 +8,7 @@ from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_components import BaseScoreComponent
 from reinvent_scoring.scoring.score_summary import ComponentSummary
 from reinvent_scoring.scoring.score_transformations import TransformationFactory
-from reinvent_scoring.scoring.enums import TransformationTypeEnum
+from reinvent_scoring.scoring.enums import TransformationTypeEnum, TransformationParametersEnum
 
 
 class SelectivityComponent(BaseScoreComponent):
@@ -16,7 +16,7 @@ class SelectivityComponent(BaseScoreComponent):
         super().__init__(parameters)
         self._transformation_type = TransformationTypeEnum()
         self._model_transformation = self._assign_delta_transformation(
-            {self.component_specific_parameters.TRANSFORMATION_TYPE: self._transformation_type.NO_TRANSFORMATION})
+            {TransformationParametersEnum.TRANSFORMATION_TYPE: self._transformation_type.NO_TRANSFORMATION})
         self._activity_params = self._prepare_activity_parameters(parameters)
         self._off_target_params = self._prepare_offtarget_parameters(parameters)
         self._activity_model = self._load_model(self._activity_params)
@@ -35,11 +35,13 @@ class SelectivityComponent(BaseScoreComponent):
         try:
             activity_model = self._load_scikit_model(parameters)
         except Exception as e:
-            raise Exception(f"The loaded file {parameters.model_path} isn't a valid scikit-learn model: {e}.")
+            model_path = self.parameters.specific_parameters.get(self.component_specific_parameters.MODEL_PATH, "")
+            raise Exception(f"The loaded file `{model_path}` isn't a valid scikit-learn model: {e}.")
         return activity_model
 
     def _load_scikit_model(self, parameters: ComponentParameters) -> BaseModelContainer:
-        with open(parameters.model_path, "rb") as f:
+        model_path = parameters.specific_parameters.get(self.component_specific_parameters.MODEL_PATH, "")
+        with open(model_path, "rb") as f:
             scikit_model = pickle.load(f)
 
             models_are_identical = self._activity_params.specific_parameters[
@@ -53,7 +55,7 @@ class SelectivityComponent(BaseScoreComponent):
             both_models_are_regression = models_are_identical and model_is_regression
 
             if both_models_are_regression:
-                parameters.specific_parameters[self.component_specific_parameters.TRANSFORMATION] = False
+                parameters.specific_parameters[self.component_specific_parameters.TRANSFORMATION] = {}
 
             self._assign_model_transformation(both_models_are_regression)
 
@@ -82,24 +84,18 @@ class SelectivityComponent(BaseScoreComponent):
         return transform_function
 
     def _prepare_activity_parameters(self, parameters: ComponentParameters) -> ComponentParameters:
-        model_path = parameters.specific_parameters["activity_model_path"]
         specific_parameters = parameters.specific_parameters["activity_specific_parameters"]
         activity_params = ComponentParameters(name=self.parameters.name,
                                               weight=self.parameters.weight,
-                                              smiles=self.parameters.smiles,
-                                              model_path=model_path,
                                               component_type=self.parameters.component_type,
                                               specific_parameters=specific_parameters
                                               )
         return activity_params
 
     def _prepare_offtarget_parameters(self, parameters: ComponentParameters) -> ComponentParameters:
-        model_path = parameters.specific_parameters["offtarget_model_path"]
         specific_parameters = parameters.specific_parameters["offtarget_specific_parameters"]
         offtarget_params = ComponentParameters(name=self.parameters.name,
                                                weight=self.parameters.weight,
-                                               smiles=self.parameters.smiles,
-                                               model_path=model_path,
                                                component_type=self.parameters.component_type,
                                                specific_parameters=specific_parameters
                                                )
@@ -113,8 +109,9 @@ class SelectivityComponent(BaseScoreComponent):
         return specific_params
 
     def _apply_model_transformation(self, predicted_activity, parameters: dict):
-        if parameters.get(self.component_specific_parameters.TRANSFORMATION, False):
-            activity = self._model_transformation(predicted_activity, parameters)
+        transform_params = parameters.get(self.component_specific_parameters.TRANSFORMATION, {})
+        if transform_params:
+            activity = self._model_transformation(predicted_activity, transform_params)
         else:
             activity = predicted_activity
         return activity
@@ -123,6 +120,8 @@ class SelectivityComponent(BaseScoreComponent):
         if both_models_are_regression:
             return
         if self._activity_params.specific_parameters.get(self.component_specific_parameters.SCIKIT) == "regression":
-            self._model_transformation = self._assign_delta_transformation(self._activity_params.specific_parameters)
+            self._model_transformation = self._assign_delta_transformation(
+                self._activity_params.specific_parameters.get(self.component_specific_parameters.TRANSFORMATION, {}))
         if self._off_target_params.specific_parameters.get(self.component_specific_parameters.SCIKIT) == "regression":
-            self._model_transformation = self._assign_delta_transformation(self._off_target_params.specific_parameters)
+            self._model_transformation = self._assign_delta_transformation(
+                self._off_target_params.specific_parameters.get(self.component_specific_parameters.TRANSFORMATION, {}))

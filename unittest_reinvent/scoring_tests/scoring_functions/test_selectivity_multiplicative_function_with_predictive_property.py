@@ -18,4 +18,4 @@ class TestSelectivityMultiplicativeFunctionWithPredictiveProperty(BaseTestSelect
 
     def test_special_selectivity_multiplicative_1(self):
         score = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.414, 3)
+        self.assertAlmostEqual(score.total_score[0],  0.258, 3)

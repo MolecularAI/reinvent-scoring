@@ -18,8 +18,6 @@ class TestQedScore(unittest.TestCase):
         parameters = ComponentParameters(component_type=sf_enum.QED_SCORE,
                                          name="qed_score",
                                          weight=1.,
-                                         smiles=[],
-                                         model_path="",
                                          specific_parameters={})
         cls.component = QedScore(parameters)
         cls.smile = HEXANE

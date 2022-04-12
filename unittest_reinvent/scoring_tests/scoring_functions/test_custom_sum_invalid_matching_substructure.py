@@ -13,9 +13,7 @@ class TestInvalidMatchingSubstructure(unittest.TestCase):
         self.ts_parameters = ComponentParameters(component_type=sf_enum.MATCHING_SUBSTRUCTURE,
                                                  name="matching_substructure",
                                                  weight=1.,
-                                                 smiles=[self.matching_pattern],
-                                                 model_path="",
-                                                 specific_parameters={})
+                                                 specific_parameters={"smiles":[self.matching_pattern]})
 
     def test_match_invalid_structure_1(self):
         with self.assertRaises(IOError) as context:

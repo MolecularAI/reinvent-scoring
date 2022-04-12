@@ -7,6 +7,4 @@ def component_parameters(component_type: str, specific_parameters: Dict[str, Any
     return ComponentParameters(component_type=component_type,
                                name=name,
                                weight=1.,
-                               smiles=[],
-                               model_path="",
                                specific_parameters=specific_parameters)

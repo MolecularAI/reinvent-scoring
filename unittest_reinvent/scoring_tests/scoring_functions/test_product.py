@@ -17,11 +17,9 @@ class TestProduct(unittest.TestCase):
         qed_score = ComponentParameters(component_type=sf_enum.QED_SCORE,
                                         name="qed_score_name",
                                         weight=1.,
-                                        smiles=[],
-                                        model_path="",
                                         specific_parameters={})
         self.sf_state = CustomProduct(parameters=[activity, qed_score, predictive_property])
 
     def test_product_1(self):
         score = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.414, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.258, 3)

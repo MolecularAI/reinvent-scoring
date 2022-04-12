@@ -47,3 +47,7 @@ class BaseStructuralComponent(BaseScoreComponent):
             proc.wait()
             proc.terminate()
         return result
+
+    @abstractmethod
+    def _parse_result(self, result) -> str:
+        raise NotImplementedError("_parse_result method is not implemented")

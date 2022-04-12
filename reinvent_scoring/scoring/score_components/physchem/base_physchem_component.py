@@ -27,7 +27,10 @@ class BasePhysChemComponent(BaseScoreComponent):
             except ValueError:
                 score = 0.0
             scores.append(score)
-        transformed_scores = self._transformation_function(scores, self.parameters.specific_parameters)
+        transform_params = self.parameters.specific_parameters.get(
+            self.component_specific_parameters.TRANSFORMATION, {}
+        )
+        transformed_scores = self._transformation_function(scores, transform_params)
         return np.array(transformed_scores, dtype=np.float32), np.array(scores, dtype=np.float32)
 
     @abstractmethod

@@ -51,7 +51,10 @@ class AZdock(BaseStructuralComponent):
             except ValueError:
                 score = 0
             scores.append(score)
-        transformed_scores = self._transformation_function(scores, self.parameters.specific_parameters)
+        transform_params = self.parameters.specific_parameters.get(
+            self.component_specific_parameters.TRANSFORMATION, {}
+        )
+        transformed_scores = self._transformation_function(scores, transform_params)
 
         return np.array(transformed_scores), np.array(scores)
 

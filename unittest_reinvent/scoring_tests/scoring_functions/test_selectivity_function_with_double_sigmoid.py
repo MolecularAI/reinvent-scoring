@@ -17,8 +17,8 @@ class TestSelectivityFunctionWithDoubleSigmoid(BaseTestSelectivityFunctionDouble
 
     def test_selectivity_function_with_scikit_and_wrapped_models_1(self):
         score: FinalSummary = self.sf_state.get_final_score(smiles=[ASPIRIN])
-        self.assertAlmostEqual(score.total_score[0], 0.154, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.153, 3)
 
     def test_selectivity_function_with_scikit_and_wrapped_models_2(self):
         score = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.171, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.169, 3)

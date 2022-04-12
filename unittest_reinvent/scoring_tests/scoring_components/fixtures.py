@@ -13,12 +13,11 @@ def instantiate_component(smiles: List[str] = None, specific_parameters: dict = 
         specific_parameters = {}
     if smiles is None:
         smiles = [BUTANE, CELECOXIB]
+    specific_parameters['smiles'] = smiles
     return TanimotoSimilarity(ComponentParameters(
         component_type=ScoringFunctionComponentNameEnum().TANIMOTO_SIMILARITY,
         name="tanimoto_similarity",
         weight=1.,
-        smiles=smiles,
-        model_path="",
         specific_parameters=specific_parameters))
 
 
@@ -27,13 +26,12 @@ def instantiate_jaccard_component(smiles: List[str] = None, specific_parameters:
         specific_parameters = {}
     if smiles is None:
         smiles = [BUTANE, CELECOXIB]
+    specific_parameters['smiles'] = smiles
     return JaccardDistance(
         ComponentParameters(
             component_type=ScoringFunctionComponentNameEnum().JACCARD_DISTANCE,
             name="jaccard_distance",
             weight=1.0,
-            smiles=smiles,
-            model_path="",
             specific_parameters=specific_parameters,
         )
     )

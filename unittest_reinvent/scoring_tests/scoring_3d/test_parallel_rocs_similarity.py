@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 import numpy.testing as npt
 
@@ -12,6 +13,7 @@ from unittest_reinvent.fixtures.test_data import CELECOXIB
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestParallelRocsSimilarity(unittest.TestCase):
 
     def setUp(self):

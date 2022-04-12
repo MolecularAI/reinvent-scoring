@@ -24,7 +24,7 @@ class SASComponent(BaseScoreComponent):
             use_features=False,  # RDKit has False as default, Descriptors class has True.
         )
 
-    def calculate_score(self, molecules: List[Mol]) -> ComponentSummary:
+    def calculate_score(self, molecules: List[Mol], step=-1) -> ComponentSummary:
         score = self.predict_from_molecules(molecules)
         score_summary = ComponentSummary(total_score=score, parameters=self.parameters)
         return score_summary
@@ -43,9 +43,14 @@ class SASComponent(BaseScoreComponent):
 
     def _load_model(self, parameters: ComponentParameters):
         try:
-            activity_model = self._load_scikit_model(parameters.model_path)
+            # TODO: in the future should use self.component_specific_parameters.MODEL_PATH
+            # model_path = self.parameters.specific_parameters.get(self.component_specific_parameters.MODEL_PATH, "")
+            model_path = self.parameters.specific_parameters.get("saz_model_path", "")
+            activity_model = self._load_scikit_model(model_path)
         except:
-            raise Exception(f"The loaded file {parameters.model_path} isn't a valid scikit-learn model")
+            # model_path = self.parameters.specific_parameters.get(self.component_specific_parameters.MODEL_PATH, "")
+            model_path = self.parameters.specific_parameters.get("saz_model_path", "")
+            raise Exception(f"The loaded file `{model_path}` isn't a valid scikit-learn model")
         return activity_model
 
     def _load_scikit_model(self, model_path: str):

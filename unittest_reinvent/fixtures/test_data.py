@@ -34,6 +34,11 @@ PHENYLETHANMINE = "c1ccccc1CCN"
 PROPANE_1_2_DIOL = "CC(O)CO"
 ACETIC_ACID = "CC(=O)O"
 
+CELECOXIB_LABELED_PARTS ='Cc1cc[c:2](cc1)[c:2]2c[c:1](nn2c3ccc(cc3)S(=O)(=O)N)[C:1](F)(F)F'
+METAMIZOLE_LABELED_PARTS ='Cc1c(N(C)[CH2:1][c:1]2ccccc2)c(=O)[n:2]([S:2](=O)(=O)O)n1C'
+AMOXAPINE_LABELED_PARTS = 'c1ccc2c(c1)N=[C:2](c3c[c:1](ccc3O2)[Cl:1])[N:2]4CCNCC4'
+METHOXYHYDRAZINE_LABELED_PARTS = '[C:1][O:1][NH:2][NH2:2]'
+COCAINE_LABELED_PARTS = 'CN1C2CCC1[CH:2](C(C2)O[C:1](=O)[c:1]3ccccc3)[C:2](=O)OC'
 
 SIMPLE_TOKENS = {t: i for i, t in enumerate(['$', '^', '(', ')', '1', '2', '3', '=', 'C', 'F', 'N', 'O', 'S', 'c', 'n'])}
 

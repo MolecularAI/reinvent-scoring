@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from unittest_reinvent.fixtures.paths import ROCS_SHAPE_QUERY
 from reinvent_scoring.scoring import CustomSum
@@ -9,6 +10,7 @@ from unittest_reinvent.fixtures.test_data import CELECOXIB, METAMIZOLE
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestRocsSimilarityWithShapeQueryNoTransfTw(unittest.TestCase):
 
     def setUp(self):

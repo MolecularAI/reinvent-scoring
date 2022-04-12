@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from reinvent_scoring.scoring import CustomSum
 from reinvent_scoring.scoring.enums import ROCSInputFileTypesEnum
@@ -6,11 +7,12 @@ from unittest_reinvent.fixtures.paths import ROCS_SHAPE_QUERY
 from reinvent_scoring.scoring.enums import ROCSSimilarityMeasuresEnum, ROCSSpecificParametersEnum
 from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
 from reinvent_scoring.scoring.enums import ComponentSpecificParametersEnum
-from reinvent_scoring.scoring.enums import TransformationTypeEnum
+from reinvent_scoring.scoring.enums import TransformationTypeEnum, TransformationParametersEnum
 from unittest_reinvent.fixtures.test_data import CELECOXIB, METAMIZOLE
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestParallelRocsSimilarityWithTransformation(unittest.TestCase):
 
     def setUp(self):
@@ -20,17 +22,19 @@ class TestParallelRocsSimilarityWithTransformation(unittest.TestCase):
         rsp_enum = ROCSSpecificParametersEnum()
         input_type_enum = ROCSInputFileTypesEnum()
         tt_enum = TransformationTypeEnum()
-        specific_parameters = {rsp_enum.SHAPE_WEIGHT: 0.5,
-                               rsp_enum.COLOR_WEIGHT: 0.5,
-                               rsp_enum.SIM_MEASURE: sim_measure_enum.REF_TVERSKY,
-                               rsp_enum.ROCS_INPUT: ROCS_SHAPE_QUERY,
-                               rsp_enum.INPUT_TYPE: input_type_enum.SHAPE_QUERY,
-                               csp_enum.TRANSFORMATION: True,
-                               csp_enum.LOW: 0.3,
-                               csp_enum.HIGH: 0.7,
-                               csp_enum.K: 1,
-                               csp_enum.TRANSFORMATION_TYPE: tt_enum.REVERSE_SIGMOID
-                               }
+        specific_parameters = {
+            rsp_enum.SHAPE_WEIGHT: 0.5,
+            rsp_enum.COLOR_WEIGHT: 0.5,
+            rsp_enum.SIM_MEASURE: sim_measure_enum.REF_TVERSKY,
+            rsp_enum.ROCS_INPUT: ROCS_SHAPE_QUERY,
+            rsp_enum.INPUT_TYPE: input_type_enum.SHAPE_QUERY,
+            csp_enum.TRANSFORMATION: {
+                TransformationParametersEnum.LOW: 0.3,
+                TransformationParametersEnum.HIGH: 0.7,
+                TransformationParametersEnum.K: 1,
+                TransformationParametersEnum.TRANSFORMATION_TYPE: tt_enum.REVERSE_SIGMOID
+            }
+        }
         ts_parameters = component_parameters(component_type=sf_enum.PARALLEL_ROCS_SIMILARITY,
                                              name="parallel_rocs_similarity",
                                              specific_parameters=specific_parameters)

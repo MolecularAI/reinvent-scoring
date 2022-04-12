@@ -2,7 +2,7 @@ import unittest
 
 from reinvent_scoring.scoring.score_transformations import TransformationFactory
 from reinvent_scoring.scoring.enums import ComponentSpecificParametersEnum
-from reinvent_scoring.scoring.enums import TransformationTypeEnum
+from reinvent_scoring.scoring.enums import TransformationTypeEnum, TransformationParametersEnum
 from unittest_reinvent.scoring_tests.scoring_transformations.fixtures import round_list
 
 
@@ -19,11 +19,15 @@ class TestScoreNoTransformation(unittest.TestCase):
         # as this functionality is part of the model container, rather than the transformation
         # factory; however, the expected result is the same as for "test_no_transformation"
         # ---------
-        specific_parameters = {self.csp_enum.TRANSFORMATION: True,
-                               self.csp_enum.TRANSFORMATION_TYPE: self.tt_enum.NO_TRANSFORMATION}
-        transform_function = self.factory.get_transformation_function(specific_parameters)
+        specific_parameters = {
+            self.csp_enum.TRANSFORMATION: {
+                TransformationParametersEnum.TRANSFORMATION_TYPE: self.tt_enum.NO_TRANSFORMATION
+            }
+        }
+        transform_params = specific_parameters.get(self.csp_enum.TRANSFORMATION)
+        transform_function = self.factory.get_transformation_function(transform_params)
         self.transformed_scores = transform_function(predictions=self.expected_scores[:],
-                                                     parameters=specific_parameters)
+                                                     parameters=transform_params)
 
     def test_score_no_transformation(self):
         # the scores are not changed (transformation is set to "NO_TRANSFORMATION")

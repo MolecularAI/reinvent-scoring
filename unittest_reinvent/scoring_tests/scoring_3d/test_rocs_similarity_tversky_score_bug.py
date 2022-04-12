@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 import numpy.testing as npt
 
@@ -12,6 +13,7 @@ from unittest_reinvent.fixtures.test_data import COCAINE, CAFFEINE, CYCLODECANE,
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestRocsSimilarityTverskyScoreBug(unittest.TestCase):
 
     def setUp(self):
@@ -23,7 +25,7 @@ class TestRocsSimilarityTverskyScoreBug(unittest.TestCase):
                                "similarity_measure": sim_measure_enum.REF_TVERSKY,
                                "rocs_input": ROCS_SHAPE_QUERY_3,
                                "input_type": input_type_enum.SHAPE_QUERY,
-                               csp_enum.TRANSFORMATION: False,
+                               csp_enum.TRANSFORMATION: {},
                                "max_num_cpus": 8
                                }
         rocs_sim = component_parameters(component_type=sf_enum.ROCS_SIMILARITY, specific_parameters=specific_parameters)

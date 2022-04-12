@@ -12,8 +12,6 @@ def tanimoto_scaffold_filter_arrangement(smiles: List[str], scores: List[float],
         component_type=ScoringFunctionComponentNameEnum().TANIMOTO_SIMILARITY,
         name="tanimoto_similarity",
         weight=1.,
-        smiles=smiles,
-        model_path="",
         specific_parameters={})
 
     component_score_summary = ComponentSummary(scores, component_parameters)

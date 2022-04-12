@@ -2,14 +2,12 @@ import numpy as np
 import math
 from scipy.interpolate import interp1d
 
-from reinvent_scoring.scoring.enums import ComponentSpecificParametersEnum
 from reinvent_scoring.scoring.enums import TransformationTypeEnum
-
+from reinvent_scoring.scoring.enums import TransformationParametersEnum 
 
 class TransformationFactory:
 
     def __init__(self):
-        self._csp_enum = ComponentSpecificParametersEnum()
         self._transformation_function_registry = self._default_transformation_function_registry()
 
     def _default_transformation_function_registry(self) -> dict:
@@ -27,7 +25,7 @@ class TransformationFactory:
         return transformation_list
 
     def get_transformation_function(self, parameters: dict):
-        transformation_type = parameters[self._csp_enum.TRANSFORMATION_TYPE]
+        transformation_type = parameters[TransformationParametersEnum.TRANSFORMATION_TYPE]
         transformation_function = self._transformation_function_registry[transformation_type]
         return transformation_function
 
@@ -35,7 +33,7 @@ class TransformationFactory:
         return np.array(predictions, dtype=np.float32)
 
     def right_step(self, predictions, parameters) -> np.array:
-        _low = parameters[self._csp_enum.LOW]
+        _low = parameters[TransformationParametersEnum.LOW]
 
         def _right_step_formula(value, low):
             if value >= low:
@@ -46,7 +44,7 @@ class TransformationFactory:
         return np.array(transformed, dtype=np.float32)
 
     def left_step(self, predictions, parameters) -> np.array:
-        _low = parameters[self._csp_enum.LOW]
+        _low = parameters[TransformationParametersEnum.LOW]
 
         def _left_step_formula(value, low):
             if value <= low:
@@ -57,8 +55,8 @@ class TransformationFactory:
         return np.array(transformed, dtype=np.float32)
 
     def step(self, predictions, parameters) -> np.array:
-        _low = parameters[self._csp_enum.LOW]
-        _high = parameters[self._csp_enum.HIGH]
+        _low = parameters[TransformationParametersEnum.LOW]
+        _high = parameters[TransformationParametersEnum.HIGH]
 
         def _step_formula(value, low, high):
             if low <= value <= high:
@@ -69,9 +67,9 @@ class TransformationFactory:
         return np.array(transformed, dtype=np.float32)
 
     def sigmoid_transformation(self, predictions: list, parameters: dict) -> np.array:
-        _low = parameters[self._csp_enum.LOW]
-        _high = parameters[self._csp_enum.HIGH]
-        _k = parameters[self._csp_enum.K]
+        _low = parameters[TransformationParametersEnum.LOW]
+        _high = parameters[TransformationParametersEnum.HIGH]
+        _k = parameters[TransformationParametersEnum.K]
 
         def _exp(pred_val, low, high, k) -> float:
             return math.pow(10, (10 * k * (pred_val - (low + high) * 0.5) / (low - high)))
@@ -80,9 +78,9 @@ class TransformationFactory:
         return np.array(transformed, dtype=np.float32)
 
     def reverse_sigmoid_transformation(self, predictions: list, parameters: dict) -> np.array:
-        _low = parameters[self._csp_enum.LOW]
-        _high = parameters[self._csp_enum.HIGH]
-        _k = parameters[self._csp_enum.K]
+        _low = parameters[TransformationParametersEnum.LOW]
+        _high = parameters[TransformationParametersEnum.HIGH]
+        _k = parameters[TransformationParametersEnum.K]
 
         def _reverse_sigmoid_formula(value, low, high, k) -> float:
             try:
@@ -94,11 +92,11 @@ class TransformationFactory:
         return np.array(transformed, dtype=np.float32)
 
     def double_sigmoid(self, predictions: list, parameters: dict) -> np.array:
-        _low = parameters[self._csp_enum.LOW]
-        _high = parameters[self._csp_enum.HIGH]
-        _coef_div = parameters[self._csp_enum.COEF_DIV]
-        _coef_si = parameters[self._csp_enum.COEF_SI]
-        _coef_se = parameters[self._csp_enum.COEF_SE]
+        _low = parameters[TransformationParametersEnum.LOW]
+        _high = parameters[TransformationParametersEnum.HIGH]
+        _coef_div = parameters[TransformationParametersEnum.COEF_DIV]
+        _coef_si = parameters[TransformationParametersEnum.COEF_SI]
+        _coef_se = parameters[TransformationParametersEnum.COEF_SE]
 
         def _double_sigmoid_formula(value, low, high, coef_div=100., coef_si=150., coef_se=150.):
             try:
@@ -133,10 +131,10 @@ class TransformationFactory:
                 destination.append(destination[-1])
             return interp1d(origin, destination, fill_value='extrapolate')
 
-        desirability = parameters.get(self._csp_enum.INTERPOLATION_MAP, [{"origin": 0.0, "destination": 0.0},
+        desirability = parameters.get(TransformationParametersEnum.INTERPOLATION_MAP, [{"origin": 0.0, "destination": 0.0},
                                                                          {"origin": 1.0, "destination": 1.0}])
-        truncate_left = parameters.get(self._csp_enum.TRUNCATE_LEFT, True)
-        truncate_right = parameters.get(self._csp_enum.TRUNCATE_RIGHT, True)
+        truncate_left = parameters.get(TransformationParametersEnum.TRUNCATE_LEFT, True)
+        truncate_right = parameters.get(TransformationParametersEnum.TRUNCATE_RIGHT, True)
 
         transformation = _transformation_function(desirability, truncate_left, truncate_right)
         transformed = transformation(predictions)

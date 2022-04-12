@@ -26,6 +26,6 @@ class NoFilterWithPenalty(BaseDiversityFilter):
 
         for i in score_summary.valid_idxs:
             if scores[i] >= self.parameters.minscore:
-                decorations = f'{sampled_sequences[i].scaffold}|{sampled_sequences[i].decoration}'
+                decorations = f'{sampled_sequences[i].input}|{sampled_sequences[i].output}'
                 self._add_to_memory(i, scores[i], smiles[i], decorations, score_summary.scaffold_log, step)
         return scores

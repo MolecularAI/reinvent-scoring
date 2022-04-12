@@ -18,7 +18,7 @@ class TestSelectivityMultiplicativeFunctionWithPredictivePropertyAndAlert(BaseTe
 
     def test_special_selectivity_multiplicative_with_alert_1(self):
         score = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.414, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.258, 3)
 
     def test_special_selectivity_multiplicative_with_alert_2(self):
         score = self.sf_state.get_final_score(smiles=[METAMIZOLE])
@@ -26,7 +26,7 @@ class TestSelectivityMultiplicativeFunctionWithPredictivePropertyAndAlert(BaseTe
 
     def test_special_selectivity_multiplicative_with_alert_3(self):
         score = self.sf_state.get_final_score(smiles=[ANILINE])
-        self.assertAlmostEqual(score.total_score[0], 0.324, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.222, 3)
 
     def test_special_selectivity_multiplicative_with_alert_4(self):
         score = self.sf_state.get_final_score(smiles=[GENTAMICIN])

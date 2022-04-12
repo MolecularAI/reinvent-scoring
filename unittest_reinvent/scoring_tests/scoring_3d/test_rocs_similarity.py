@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from unittest_reinvent.fixtures.paths import ROCS_SIMILARITY_TEST_DATA
 from reinvent_scoring.scoring import CustomSum
@@ -9,6 +10,7 @@ from unittest_reinvent.fixtures.test_data import CELECOXIB, METAMIZOLE, INVALID
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestRocsSimilarity(unittest.TestCase):
 
     def setUp(self):
@@ -18,7 +20,7 @@ class TestRocsSimilarity(unittest.TestCase):
         specific_parameters = {"shape_weight": 0.5, "color_weight": 0.5,
                                "rocs_input": ROCS_SIMILARITY_TEST_DATA,
                                "input_type": input_type_enum.SDF_QUERY,
-                               csp_enum.TRANSFORMATION: False
+                               csp_enum.TRANSFORMATION: {}
                                }
         ts_parameters = component_parameters(component_type=sf_enum.ROCS_SIMILARITY,
                                              specific_parameters=specific_parameters)

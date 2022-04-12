@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 from typing import Dict, Any
 from unittest_reinvent.fixtures.paths import ROCS_SHAPE_QUERY, ROCS_SHAPE_QUERY_2
@@ -11,6 +12,7 @@ from unittest_reinvent.fixtures.test_data import CELECOXIB, METAMIZOLE
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestRocsSimilarityWithTwoComponents(unittest.TestCase):
 
     def setUp(self):

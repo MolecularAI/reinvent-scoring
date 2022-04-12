@@ -7,7 +7,7 @@ from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring.score_components import BaseScoreComponent
 from reinvent_scoring.scoring.score_summary import ComponentSummary
 from reinvent_scoring.scoring.score_transformations import TransformationFactory
-from reinvent_scoring.scoring.enums import TransformationTypeEnum
+from reinvent_scoring.scoring.enums import TransformationTypeEnum, TransformationParametersEnum
 
 
 class PredictivePropertyComponent(BaseScoreComponent):
@@ -30,28 +30,32 @@ class PredictivePropertyComponent(BaseScoreComponent):
         try:
             activity_model = self._load_container(parameters)
         except:
-            raise Exception(f"The loaded file {parameters.model_path} isn't a valid scikit-learn model")
+            model_path = self.parameters.specific_parameters.get(self.component_specific_parameters.MODEL_PATH, "")
+            raise Exception(f"The loaded file `{model_path}` isn't a valid scikit-learn model")
         return activity_model
 
     def _load_container(self, parameters: ComponentParameters):
-        with open(parameters.model_path, "rb") as f:
+        model_path = self.parameters.specific_parameters.get(self.component_specific_parameters.MODEL_PATH, "")
+        with open(model_path, "rb") as f:
             scikit_model = pickle.load(f)
             packaged_model = ModelContainer(scikit_model, parameters.specific_parameters)
         return packaged_model
 
     def _apply_transformation(self, predicted_activity, parameters: dict):
-        if parameters.get(self.component_specific_parameters.TRANSFORMATION, False):
-            activity = self._transformation_function(predicted_activity, parameters)
+        transform_params = parameters.get(self.component_specific_parameters.TRANSFORMATION)
+        if transform_params:
+            activity = self._transformation_function(predicted_activity, transform_params)
         else:
             activity = predicted_activity
         return activity
 
     def _assign_transformation(self, specific_parameters: dict):
         transformation_type = TransformationTypeEnum()
-        """classification models should not have any prediction transformations"""
-        if specific_parameters[self.component_specific_parameters.SCIKIT] == "classification":
-            specific_parameters[self.component_specific_parameters.TRANSFORMATION] = False
-            specific_parameters[self.component_specific_parameters.TRANSFORMATION_TYPE] = transformation_type.NO_TRANSFORMATION
+        transform_params = specific_parameters.get(self.component_specific_parameters.TRANSFORMATION)
+        if not transform_params:
+            specific_parameters[self.component_specific_parameters.TRANSFORMATION] = {
+                    TransformationParametersEnum.TRANSFORMATION_TYPE: transformation_type.NO_TRANSFORMATION
+                }
         factory = TransformationFactory()
-        transform_function = factory.get_transformation_function(specific_parameters)
+        transform_function = factory.get_transformation_function(transform_params)
         return transform_function

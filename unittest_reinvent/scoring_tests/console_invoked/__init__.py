@@ -1,1 +1,1 @@
-from unittest_reinvent.scoring_tests.console_invoked.test_azgard import Test_structural_AZgard
+from unittest_reinvent.scoring_tests.console_invoked.test_icolos import Test_structural_Icolos

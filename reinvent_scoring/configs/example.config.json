@@ -14,15 +14,14 @@
       "DOCKSTREAM_ENV_PATH": "/<your_path>/miniconda3/envs/DockStream/bin/python",
       "DOCKSTREAM_DEBUG": true
     },
-    "AZGARD": {
-      "AZGARD_EXECUTOR_SCRIPT_PATH": "/<your_path>/executor.py",
-      "AZGARD_ENV_PATH": "/<your_path>/miniconda3/envs/AZgard/bin/python",
-      "AZGARD_DEBUG": true
+    "ICOLOS": {
+      "ICOLOS_EXECUTOR_PATH": "/<your_path>/miniconda3/envs/icolosprod/bin/icolos",
+      "ICOLOS_DEBUG": true
     }
   },
   "ENVIRONMENTAL_VARIABLES": {
     "PIP_URL": "<confidential info>",
-    "PIP_KEY": "<confidential info>",
-    "PIP_GET_RESULTS": "<relevant only for batching implemented in BasePiPModelBatchingComponent>"
+    "PIP_KEY": "<contact Atanas>",
+    "PIP_GET_RESULTS": "<relevant only for batching implemented in BasePiPModelBatchingComponent>",
   }
 }

@@ -1,15 +1,16 @@
 import unittest
+import pytest
 
-from reinvent_scoring.scoring.component_parameters import ComponentParameters
 from reinvent_scoring.scoring import CustomSum
-from unittest_reinvent.fixtures.paths import ROCS_MULTI_SIMILARITY_TEST_DATA
+from reinvent_scoring.scoring.enums import ComponentSpecificParametersEnum
 from reinvent_scoring.scoring.enums import ROCSInputFileTypesEnum
 from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
-from reinvent_scoring.scoring.enums import ComponentSpecificParametersEnum
+from unittest_reinvent.fixtures.paths import ROCS_MULTI_SIMILARITY_TEST_DATA
 from unittest_reinvent.fixtures.test_data import CELECOXIB, METAMIZOLE, INVALID
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestParallelRocsMultiSimilarity(unittest.TestCase):
 
     def setUp(self):
@@ -21,7 +22,7 @@ class TestParallelRocsMultiSimilarity(unittest.TestCase):
         specific_parameters = {"shape_weight": 0.5, "color_weight": 0.5,
                                "rocs_input": ROCS_MULTI_SIMILARITY_TEST_DATA,
                                "input_type": input_type_enum.SDF_QUERY,
-                               csp_enum.TRANSFORMATION: False,
+                               csp_enum.TRANSFORMATION: {},
                                "max_num_cpus": 8
                                }
         ts_parameters = component_parameters(component_type=sf_enum.PARALLEL_ROCS_SIMILARITY,

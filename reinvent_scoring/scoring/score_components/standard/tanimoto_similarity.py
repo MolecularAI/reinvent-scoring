@@ -13,7 +13,8 @@ class TanimotoSimilarity(BaseScoreComponent):
         self._radius = self.parameters.specific_parameters.get("radius", 3)
         self._use_counts = self.parameters.specific_parameters.get("use_counts", True)
         self._use_features = self.parameters.specific_parameters.get("use_features", True)
-        self._ref_fingerprints = self._chemistry.smiles_to_fingerprints(self.parameters.smiles, radius=self._radius,
+        smiles = self.parameters.specific_parameters.get(self.component_specific_parameters.SMILES, [])
+        self._ref_fingerprints = self._chemistry.smiles_to_fingerprints(smiles, radius=self._radius,
                                                                         use_counts=self._use_counts,
                                                                         use_features=self._use_features)
 

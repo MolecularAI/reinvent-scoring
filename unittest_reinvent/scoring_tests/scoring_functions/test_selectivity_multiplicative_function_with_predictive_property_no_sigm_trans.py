@@ -15,9 +15,7 @@ class TestSelectivityMultiplicativeFunctionWithPredictivePropertyNoSigmTrans(Bas
         self.custom_alerts = ComponentParameters(component_type=self.enum.CUSTOM_ALERTS,
                                                  name="custom_alerts_name",
                                                  weight=1.,
-                                                 smiles=[PROPANE],
-                                                 model_path="",
-                                                 specific_parameters={})
+                                                 specific_parameters={"smiles":[PROPANE]})
 
         self.sf_state = CustomProduct(
             parameters=[self.activity, self.qed_score, self.custom_alerts, self.matching_substructure,
@@ -25,11 +23,11 @@ class TestSelectivityMultiplicativeFunctionWithPredictivePropertyNoSigmTrans(Bas
 
     def test_special_selectivity_multiplicative_no_sigm_trans_1(self):
         score = self.sf_state.get_final_score(smiles=[CELECOXIB])
-        self.assertAlmostEqual(score.total_score[0], 0.414, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.258, 3)
 
     def test_special_selectivity_multiplicative_no_sigm_trans_2(self):
         score = self.sf_state.get_final_score(smiles=[ASPIRIN])
-        self.assertAlmostEqual(score.total_score[0], 0.412, 3)
+        self.assertAlmostEqual(score.total_score[0], 0.232, 3)
 
     def test_special_selectivity_multiplicative_no_sigm_trans_4(self):
         score = self.sf_state.get_final_score(smiles=[GENTAMICIN])

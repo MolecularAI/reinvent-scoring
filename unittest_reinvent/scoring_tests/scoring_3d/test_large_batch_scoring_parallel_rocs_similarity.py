@@ -1,4 +1,5 @@
 import unittest
+import pytest
 
 import numpy.testing as npt
 
@@ -13,6 +14,7 @@ from unittest_reinvent.fixtures.test_data import CELECOXIB, METAMIZOLE, AMOXAPIN
     CAFFEINE, CYCLODECANE, PARACETAMOL, ASPIRIN
 
 
+@pytest.mark.integration
 class TestParallelRocsSimilarityWithShapeQueryLargeBatch(unittest.TestCase):
     # This is to assert that there is always a 1:1 between smiles and scores for each batch
     # even when one or more smiles fail to produce a score
@@ -25,28 +27,22 @@ class TestParallelRocsSimilarityWithShapeQueryLargeBatch(unittest.TestCase):
         custom_alerts = ComponentParameters(component_type=enum.CUSTOM_ALERTS,
                                             name="custom_alerts_name",
                                             weight=1.,
-                                            smiles=[],
-                                            model_path="",
                                             specific_parameters={})
         matching_substructure = ComponentParameters(component_type=enum.MATCHING_SUBSTRUCTURE,
                                                     name="matching_substructure_name",
                                                     weight=1.,
-                                                    smiles=[],
-                                                    model_path="",
                                                     specific_parameters={})
         specific_parameters = {rsp_enum.SHAPE_WEIGHT: 0.5,
                                rsp_enum.COLOR_WEIGHT: 0.5,
                                rsp_enum.SIM_MEASURE: sim_measure_enum.REF_TVERSKY,
                                rsp_enum.ROCS_INPUT: ROCS_SHAPE_QUERY_BATCH,
                                rsp_enum.INPUT_TYPE: input_type_enum.SHAPE_QUERY,
-                               csp_enum.TRANSFORMATION: False,
+                               csp_enum.TRANSFORMATION: {},
                                rsp_enum.MAX_CPUS: 4
                                }
         rocs_sim = ComponentParameters(component_type=enum.PARALLEL_ROCS_SIMILARITY,
                                        name="parallel_rocs_similarity",
                                        weight=3.,
-                                       smiles=[],
-                                       model_path="",
                                        specific_parameters=specific_parameters)
         self.sf_state = CustomProduct(parameters=[custom_alerts, matching_substructure, rocs_sim])
 

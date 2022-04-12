@@ -20,7 +20,7 @@ class TestPredictivePropertyComponent(unittest.TestCase):
         cls.component = PredictivePropertyComponent(activity)
 
     def test_predictive_property_1(self):
-        npt.assert_almost_equal(score_single(self.component, CELECOXIB), 0.306, 3)
+        npt.assert_almost_equal(score_single(self.component, CELECOXIB), 0.15, 3)
 
     def test_predictive_property_2(self):
         self.assertTrue(self.component.parameters.specific_parameters[self.csp_enum.TRANSFORMATION])

@@ -20,7 +20,5 @@ class BaseSetup(unittest.TestCase):
         ts_parameters = ComponentParameters(component_type=self.component_type,
                                             name="dummy",
                                             weight=1.,
-                                            smiles=[],
-                                            model_path="",
                                             specific_parameters=self.specific_parameters)
         self.sf_state = CustomSum(parameters=[ts_parameters])

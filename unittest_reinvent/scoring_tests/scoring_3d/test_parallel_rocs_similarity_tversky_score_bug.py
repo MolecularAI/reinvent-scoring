@@ -1,5 +1,5 @@
 import unittest
-
+import pytest
 import numpy.testing as npt
 
 from reinvent_scoring.scoring import CustomSum
@@ -11,6 +11,7 @@ from unittest_reinvent.fixtures.test_data import COCAINE, CAFFEINE, CYCLODECANE,
 from unittest_reinvent.scoring_tests.scoring_3d.fixtures import component_parameters
 
 
+@pytest.mark.integration
 class TestParallelRocsSimilarityTverskyScoreBug(unittest.TestCase):
 
     def setUp(self):

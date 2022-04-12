@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="reinvent_scoring",
-    version="0.0.41",
+    version="0.0.73",
     author="MolecularAI",
     author_email="patronov@gmail.com",
     description="Scoring functions for Reinvent",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",
+    url="https://github.com/MolecularAI/reinvent-scoring.git",
     package_data={"reinvent_scoring": ["scoring/score_components/synthetic_accessibility/fpscores.pkl.gz"]},
     packages=setuptools.find_packages(exclude='unittest_reinvent'),
     classifiers=[

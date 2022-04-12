@@ -1,7 +1,6 @@
 import numpy as np
 import numpy.testing as npt
 
-from reinvent_scoring import ScoringFunctionComponentNameEnum
 from unittest_reinvent.fixtures.test_data import CELECOXIB, METAMIZOLE, AMOXAPINE, METHOXYHYDRAZINE, COCAINE
 from unittest_reinvent.scoring_tests.physchem.base_setup import BaseSetup
 
@@ -10,10 +9,7 @@ class TestSlogpScoreNotransformation(BaseSetup):
 
     def setUp(self):
         super().setup_attrs()
-        specific_parameters = {
-            self.csp_enum.TRANSFORMATION: False
-        }
-        super().init(self.sf_enum.SLOGP, specific_parameters)
+        super().init(self.sf_enum.SLOGP, {})
         super().setUp()
 
     def test_slogp_1(self):

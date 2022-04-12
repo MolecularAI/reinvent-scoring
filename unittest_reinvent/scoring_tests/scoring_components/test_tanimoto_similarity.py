@@ -1,8 +1,9 @@
 import unittest
 
-from unittest_reinvent.scoring_tests.scoring_components.fixtures import score_single, score, instantiate_component
-from unittest_reinvent.fixtures.test_data import CELECOXIB, CELECOXIB_C, CAFFEINE, BUTANE, ANILINE, TOLUENE
 import numpy.testing as npt
+
+from unittest_reinvent.fixtures.test_data import CELECOXIB, CELECOXIB_C, BUTANE
+from unittest_reinvent.scoring_tests.scoring_components.fixtures import score_single, score, instantiate_component
 
 
 class TestTanimotoSimilarity(unittest.TestCase):

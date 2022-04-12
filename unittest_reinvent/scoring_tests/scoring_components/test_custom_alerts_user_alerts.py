@@ -17,9 +17,7 @@ class TestCustomAlertsWithUserAlerts(unittest.TestCase):
         parameters = ComponentParameters(component_type=sf_enum.CUSTOM_ALERTS,
                                          name="custom_alerts",
                                          weight=1.,
-                                         smiles=list_of_alerts,
-                                         model_path="",
-                                         specific_parameters={})
+                                         specific_parameters={"smiles":list_of_alerts})
         cls.component = CustomAlerts(parameters)
 
     def test_user_alert_1(self):

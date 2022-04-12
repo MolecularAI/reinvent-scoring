@@ -1,3 +1,5 @@
+from reinvent_scoring.scoring.score_components.physchem.num_aliphatic_rings import NumAliphaticRings
+from reinvent_scoring.scoring.score_components.physchem.num_aromatic_rings import NumAromaticRings
 from reinvent_scoring.scoring.score_components.physchem.number_of_stereo_centers import NumberOfStereoCenters
 from reinvent_scoring.scoring.score_components.physchem.tpsa import PSA
 from reinvent_scoring.scoring.score_components.physchem.hba import HBA_Lipinski

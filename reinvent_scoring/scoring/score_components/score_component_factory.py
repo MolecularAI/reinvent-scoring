@@ -1,17 +1,18 @@
 from typing import List
 
 from reinvent_scoring.scoring.component_parameters import ComponentParameters
+from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
+from reinvent_scoring.scoring.score_components import BaseScoreComponent
 from reinvent_scoring.scoring.score_components import TanimotoSimilarity, \
     JaccardDistance, CustomAlerts, QedScore, MatchingSubstructure, \
     RocsSimilarity, ParallelRocsSimilarity, PredictivePropertyComponent, SelectivityComponent, \
     SASComponent, MolWeight, PSA, RotatableBonds, HBD_Lipinski, HBA_Lipinski, \
-    NumRings, AZlogD74, HLMClint, SlogP, \
-    RHClint, HHClint, SolubilityDD, HERG, CACO2Intrinsic, CACO2Efflux, AZdock, RatPKPiP, Top20, GraphLength, \
-    NumberOfStereoCenters
-from reinvent_scoring.scoring.score_components import BaseScoreComponent
-from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
-from reinvent_scoring.scoring.score_components.pip.pip_log_prediction_component import PiPLogPredictionComponent
-from reinvent_scoring.scoring.score_components.pip.pip_prediction_component import PiPPredictionComponent
+    NumRings, SlogP, AZdock, RatPKPiP, PiPLogPredictionComponent, PiPPredictionComponent, \
+    QptunaPiPModelComponent, StringPiPPredictionComponent, GraphLength, NumberOfStereoCenters, \
+    LinkerLengthRatio, LinkerGraphLength, LinkerEffectiveLength, LinkerNumRings, LinkerNumAliphaticRings, \
+    LinkerNumAromaticRings, LinkerNumSPAtoms, LinkerNumSP2Atoms, LinkerNumSP3Atoms, LinkerNumHBA, \
+    LinkerNumHBD, LinkerMolWeight, LinkerRatioRotatableBonds, DockStream, NumAromaticRings, NumAliphaticRings
+from reinvent_scoring.scoring.score_components.console_invoked import Icolos
 
 
 class ScoreComponentFactory:
@@ -36,17 +37,11 @@ class ScoreComponentFactory:
             enum.NUM_HBD_LIPINSKI: HBD_Lipinski,
             enum.NUM_HBA_LIPINSKI: HBA_Lipinski,
             enum.NUM_RINGS: NumRings,
+            enum.NUM_AROMATIC_RINGS: NumAromaticRings,
+            enum.NUM_ALIPHATIC_RINGS: NumAliphaticRings,
             enum.SLOGP: SlogP,
             enum.NUMBER_OF_STEREO_CENTERS: NumberOfStereoCenters,
             enum.PARALLEL_ROCS_SIMILARITY: ParallelRocsSimilarity,
-            enum.AZ_LOGD74: AZlogD74,
-            enum.HLM_CLINT: HLMClint,
-            enum.RH_CLINT: RHClint,
-            enum.HH_CLINT: HHClint,
-            enum.SOLUBILITY_DD: SolubilityDD,
-            enum.HERG: HERG,
-            enum.CACO2_INTR: CACO2Intrinsic,
-            enum.CACO2_EFFLUX: CACO2Efflux,
             enum.SELECTIVITY: SelectivityComponent,
             enum.SA_SCORE: SASComponent,
             enum.AZDOCK: AZdock,
@@ -59,11 +54,38 @@ class ScoreComponentFactory:
             enum.SOLUBILITY_DD_PIP: PiPLogPredictionComponent,
             enum.HERG_PIP: PiPPredictionComponent,
             enum.RAT_PK_PIP: RatPKPiP,
-            enum.CLAB_TOP_20: Top20,
             enum.RA_SCORE: PiPPredictionComponent,
-            enum.KPUU_PIP: PiPLogPredictionComponent
+            enum.KPUU_PIP: PiPLogPredictionComponent,
+            enum.QPTUNA_PIP_MODEL: QptunaPiPModelComponent,
+            enum.THP1_CYTOTOXICITY: StringPiPPredictionComponent,
+            enum.LINKER_GRAPH_LENGTH: LinkerGraphLength,
+            enum.LINKER_EFFECTIVE_LENGTH: LinkerEffectiveLength,
+            enum.LINKER_LENGTH_RATIO: LinkerLengthRatio,
+            enum.LINKER_NUM_RINGS: LinkerNumRings,
+            enum.LINKER_NUM_ALIPHATIC_RINGS: LinkerNumAliphaticRings,
+            enum.LINKER_NUM_AROMATIC_RINGS: LinkerNumAromaticRings,
+            enum.LINKER_NUM_SP_ATOMS: LinkerNumSPAtoms,
+            enum.LINKER_NUM_SP2_ATOMS: LinkerNumSP2Atoms,
+            enum.LINKER_NUM_SP3_ATOMS: LinkerNumSP3Atoms,
+            enum.LINKER_NUM_HBA: LinkerNumHBA,
+            enum.LINKER_NUM_HBD: LinkerNumHBD,
+            enum.LINKER_MOL_WEIGHT: LinkerMolWeight,
+            enum.LINKER_RATIO_ROTATABLE_BONDS: LinkerRatioRotatableBonds,
+            enum.DOCKSTREAM: DockStream,
+            enum.ICOLOS: Icolos,
+            # enum.AIZYNTH: BuildingBlockAvailabilityComponent
         }
         return component_map
 
     def create_score_components(self) -> [BaseScoreComponent]:
-        return [self._current_components.get(p.component_type)(p) for p in self._parameters]
+        def create_component(component_params):
+            if component_params.component_type in self._current_components:
+                component = self._current_components[component_params.component_type]
+                component_instance = component(component_params)
+            else:
+                raise KeyError(f'Component: {component_params.component_type} is not implemented.'
+                               f' Consider checking your input.')
+            return component_instance
+
+        components = [create_component(component) for component in self._parameters]
+        return components

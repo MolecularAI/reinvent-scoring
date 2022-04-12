@@ -16,15 +16,11 @@ class TestCombinedDistanceAndSimilarity(unittest.TestCase):
         ts_parameters = ComponentParameters(component_type=sf_enum.TANIMOTO_SIMILARITY,
                                             name="tanimoto_similarity",
                                             weight=1.,
-                                            smiles=[BUTANE, CELECOXIB],
-                                            model_path="",
-                                            specific_parameters={})
+                                            specific_parameters={"smiles":[BUTANE, CELECOXIB]})
         td_parameters = ComponentParameters(component_type=sf_enum.JACCARD_DISTANCE,
                                             name="tanimoto_distance",
                                             weight=1.,
-                                            smiles=[BUTANE, CELECOXIB],
-                                            model_path="",
-                                            specific_parameters={})
+                                            specific_parameters={"smiles":[BUTANE, CELECOXIB]})
         self.sf_state = CustomSum(parameters=[ts_parameters, td_parameters])
 
     def test_combined_1(self):

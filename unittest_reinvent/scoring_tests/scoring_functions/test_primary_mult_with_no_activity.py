@@ -13,15 +13,11 @@ class TestPrimaryMultWithNoActivity(unittest.TestCase):
         custom_alerts = ComponentParameters(component_type=enum.CUSTOM_ALERTS,
                                             name="custom_alerts_name",
                                             weight=1.,
-                                            smiles=[PENTANE],
-                                            model_path="",
-                                            specific_parameters={})
+                                            specific_parameters={"smiles":[PENTANE]})
         matching_substructure = ComponentParameters(component_type=enum.MATCHING_SUBSTRUCTURE,
                                                     name="matching_substructure_name",
                                                     weight=1.,
-                                                    smiles=[BENZENE],
-                                                    model_path="",
-                                                    specific_parameters={})
+                                                    specific_parameters={"smiles":[BENZENE]})
         self.sf_state = CustomProduct(
             parameters=[matching_substructure, custom_alerts])
 

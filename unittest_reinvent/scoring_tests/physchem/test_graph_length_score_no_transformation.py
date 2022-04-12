@@ -9,10 +9,7 @@ class TestGraphLengthScoreNoTransformation(BaseSetup):
 
     def setUp(self):
         super().setup_attrs()
-        specific_parameters = {
-            self.csp_enum.TRANSFORMATION: False
-        }
-        super().init(self.sf_enum.GRAPH_LENGTH, specific_parameters)
+        super().init(self.sf_enum.GRAPH_LENGTH, {})
         super().setUp()
 
     def test_graph_length_1(self):
