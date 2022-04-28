@@ -105,10 +105,6 @@ class BasePiPModelBatchingComponent(BaseRESTComponent):
             raise KeyError(f"Key {variable} not found in reinvent scoring config")
 
     def _get_results(self, response):
-        """
-        Documentation for this get call can be found at:
-        https://confluence.astrazeneca.net/pages/viewpage.action?spaceKey=ADD&title=Batching+and+caching+service
-        """
         async_location = response.headers.get('Location', None)
         url = self._create_get_url(async_location)
 
