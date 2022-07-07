@@ -4,6 +4,7 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class ScoringFunctionComponentNameEnum:
     PARALLEL_ROCS_SIMILARITY = "parallel_rocs_similarity"
+    DLF = "dlf"
     SELECTIVITY = "selectivity"
     PREDICTIVE_PROPERTY = "predictive_property"
     ROCS_SIMILARITY = "rocs_similarity"

@@ -13,6 +13,7 @@ from reinvent_scoring.scoring.score_components import TanimotoSimilarity, \
     LinkerNumAromaticRings, LinkerNumSPAtoms, LinkerNumSP2Atoms, LinkerNumSP3Atoms, LinkerNumHBA, \
     LinkerNumHBD, LinkerMolWeight, LinkerRatioRotatableBonds, DockStream, NumAromaticRings, NumAliphaticRings
 from reinvent_scoring.scoring.score_components.console_invoked import Icolos
+from reinvent_scoring.scoring.score_components.dlf.dlf_api_score_component import DlfApiComponent
 
 
 class ScoreComponentFactory:
@@ -27,6 +28,7 @@ class ScoreComponentFactory:
             enum.ROCS_SIMILARITY: RocsSimilarity,
             enum.PREDICTIVE_PROPERTY: PredictivePropertyComponent,
             enum.TANIMOTO_SIMILARITY: TanimotoSimilarity,
+            enum.DLF: DlfApiComponent,
             enum.JACCARD_DISTANCE: JaccardDistance,
             enum.CUSTOM_ALERTS: CustomAlerts,
             enum.QED_SCORE: QedScore,
