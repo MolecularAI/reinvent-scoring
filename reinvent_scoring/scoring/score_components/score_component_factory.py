@@ -5,7 +5,7 @@ from reinvent_scoring.scoring.enums import ScoringFunctionComponentNameEnum
 from reinvent_scoring.scoring.score_components import BaseScoreComponent
 from reinvent_scoring.scoring.score_components import TanimotoSimilarity, \
     JaccardDistance, CustomAlerts, QedScore, MatchingSubstructure, \
-    RocsSimilarity, ParallelRocsSimilarity, PredictivePropertyComponent, SelectivityComponent, \
+    RocsSimilarity, ParallelRocsSimilarity, PredictivePropertyComponent, ChemPropComponent, SelectivityComponent, \
     SASComponent, MolWeight, PSA, RotatableBonds, HBD_Lipinski, HBA_Lipinski, \
     NumRings, SlogP, AZdock, RatPKPiP, PiPLogPredictionComponent, PiPPredictionComponent, \
     QptunaPiPModelComponent, StringPiPPredictionComponent, GraphLength, NumberOfStereoCenters, \
@@ -26,6 +26,7 @@ class ScoreComponentFactory:
             enum.MATCHING_SUBSTRUCTURE: MatchingSubstructure,
             enum.ROCS_SIMILARITY: RocsSimilarity,
             enum.PREDICTIVE_PROPERTY: PredictivePropertyComponent,
+            enum.CHEMPROP: ChemPropComponent,
             enum.TANIMOTO_SIMILARITY: TanimotoSimilarity,
             enum.JACCARD_DISTANCE: JaccardDistance,
             enum.CUSTOM_ALERTS: CustomAlerts,
