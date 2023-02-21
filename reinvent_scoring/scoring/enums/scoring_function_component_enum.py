@@ -6,6 +6,7 @@ class ScoringFunctionComponentNameEnum:
     PARALLEL_ROCS_SIMILARITY = "parallel_rocs_similarity"
     SELECTIVITY = "selectivity"
     PREDICTIVE_PROPERTY = "predictive_property"
+    CHEMPROP = "chemprop"
     ROCS_SIMILARITY = "rocs_similarity"
     MATCHING_SUBSTRUCTURE = "matching_substructure"
     TANIMOTO_SIMILARITY = "tanimoto_similarity"
