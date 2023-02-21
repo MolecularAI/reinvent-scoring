@@ -61,3 +61,4 @@ class ScoringFunctionComponentNameEnum:
     AIZYNTH = "aizynth"
     QPTUNA_PIP_MODEL = "optuna-multi"
     THP1_CYTOTOXICITY = "thp1-class"
+    GENERAL_REST = "general_rest"
