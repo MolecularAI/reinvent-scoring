@@ -12,16 +12,21 @@ class QedScore(BaseScoreComponent):
         super().__init__(parameters)
 
     def calculate_score(self, molecules: List) -> ComponentSummary:
-        score = self._calculate_qed(molecules)
-        score_summary = ComponentSummary(total_score=score, parameters=self.parameters)
+        score, raw_score = self._calculate_score(molecules)
+        score_summary = ComponentSummary(total_score=score, parameters=self.parameters, raw_score=raw_score)
         return score_summary
 
-    def _calculate_qed(self, query_mols) -> np.array:
-        qed_scores = []
+    def _calculate_score(self, query_mols) -> np.array:
+        scores = []
         for mol in query_mols:
             try:
-                qed_score = qed(mol)
+                score = qed(mol)
             except ValueError:
-                qed_score = 0.0
-            qed_scores.append(qed_score)
-        return np.array(qed_scores, dtype=np.float32)
+                score = 0.0
+            scores.append(score)
+        transform_params = self.parameters.specific_parameters.get(
+            self.component_specific_parameters.TRANSFORMATION, {}
+        )
+        transformed_scores = self._transformation_function(scores, transform_params)
+        return np.array(transformed_scores, dtype=np.float32), np.array(scores, dtype=np.float32)
+        
